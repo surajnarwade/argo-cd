@@ -257,15 +257,16 @@ func (c *Cmd) InspectChart() (string, error) {
 }
 
 type TemplateOpts struct {
-	Name        string
-	Namespace   string
-	KubeVersion string
-	APIVersions []string
-	Set         map[string]string
-	SetString   map[string]string
-	SetFile     map[string]pathutil.ResolvedFilePath
-	Values      []pathutil.ResolvedFilePath
-	SkipCrds    bool
+	Name         string
+	Namespace    string
+	KubeVersion  string
+	APIVersions  []string
+	Set          map[string]string
+	SetString    map[string]string
+	SetFile      map[string]pathutil.ResolvedFilePath
+	Values       []pathutil.ResolvedFilePath
+	SkipCrds     bool
+	KustomizePRs string
 }
 
 var (
@@ -325,6 +326,31 @@ func (c *Cmd) template(chartPath string, opts *TemplateOpts) (string, error) {
 			msg = apiVersionsRemover.ReplaceAllString(msg, "<api versions removed> ")
 		}
 		return "", errors.New(msg)
+	}
+	// post rendering
+	if opts.KustomizePRs != "" {
+		// create the helm-output file
+		helmOutputPath := filepath.Join(c.WorkDir, "helm-output.yaml")
+		_, err := os.Create(helmOutputPath)
+		if err != nil {
+			return "", err
+		}
+		// stat the file
+		helmOutputInfo, err := os.Stat(helmOutputPath)
+		if err != nil {
+			return "", fmt.Errorf("failed to stat helm-output.yaml: %w", err)
+		}
+		// output the helm output in a file
+		err = os.WriteFile(helmOutputPath, []byte(out), helmOutputInfo.Mode())
+		if err != nil {
+			return "", errors.New(err.Error())
+		}
+		// running kustomize command
+		cmd := exec.Command("kustomize", "build", c.WorkDir)
+		out, err = executil.Run(cmd)
+		if err != nil {
+			return "", err
+		}
 	}
 	return out, nil
 }

@@ -6260,6 +6260,13 @@
         "plugin": {
           "$ref": "#/definitions/v1alpha1ApplicationSourcePlugin"
         },
+        "postRenderers": {
+          "type": "array",
+          "title": "PostRenderers contains a PostRenderer specification",
+          "items": {
+            "$ref": "#/definitions/v1alpha1PostRenderer"
+          }
+        },
         "ref": {
           "description": "Ref is reference to another source within sources field. This field will not be used if used with a `source` tag.",
           "type": "string"
@@ -7311,6 +7318,19 @@
         }
       }
     },
+    "v1alpha1Kustomize": {
+      "description": "Kustomize Helm PostRenderer specification.",
+      "type": "object",
+      "properties": {
+        "patches": {
+          "type": "array",
+          "title": "Patches is a list of Kustomize patches\n+optional",
+          "items": {
+            "$ref": "#/definitions/v1alpha1KustomizePatch"
+          }
+        }
+      }
+    },
     "v1alpha1KustomizeGvk": {
       "type": "object",
       "properties": {
@@ -7641,6 +7661,15 @@
           "additionalProperties": {
             "$ref": "#/definitions/v1JSON"
           }
+        }
+      }
+    },
+    "v1alpha1PostRenderer": {
+      "description": "PostRenderer contains a Helm PostRenderer specification.",
+      "type": "object",
+      "properties": {
+        "kustomize": {
+          "$ref": "#/definitions/v1alpha1Kustomize"
         }
       }
     },

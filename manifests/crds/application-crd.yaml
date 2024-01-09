@@ -461,6 +461,48 @@ spec:
                               type: object
                             type: array
                         type: object
+                      postRenderers:
+                        description: PostRenderers contains a PostRenderer specification
+                        items:
+                          description: PostRenderer contains a Helm PostRenderer specification.
+                          properties:
+                            kustomize:
+                              description: Kustomization to apply as PostRenderer.
+                              properties:
+                                patches:
+                                  description: Patches is a list of Kustomize patches
+                                  items:
+                                    properties:
+                                      options:
+                                        additionalProperties:
+                                          type: boolean
+                                        type: object
+                                      patch:
+                                        type: string
+                                      path:
+                                        type: string
+                                      target:
+                                        properties:
+                                          annotationSelector:
+                                            type: string
+                                          group:
+                                            type: string
+                                          kind:
+                                            type: string
+                                          labelSelector:
+                                            type: string
+                                          name:
+                                            type: string
+                                          namespace:
+                                            type: string
+                                          version:
+                                            type: string
+                                        type: object
+                                    type: object
+                                  type: array
+                              type: object
+                          type: object
+                        type: array
                       ref:
                         description: Ref is reference to another source within sources
                           field. This field will not be used if used with a `source`
@@ -796,6 +838,49 @@ spec:
                                 type: object
                               type: array
                           type: object
+                        postRenderers:
+                          description: PostRenderers contains a PostRenderer specification
+                          items:
+                            description: PostRenderer contains a Helm PostRenderer
+                              specification.
+                            properties:
+                              kustomize:
+                                description: Kustomization to apply as PostRenderer.
+                                properties:
+                                  patches:
+                                    description: Patches is a list of Kustomize patches
+                                    items:
+                                      properties:
+                                        options:
+                                          additionalProperties:
+                                            type: boolean
+                                          type: object
+                                        patch:
+                                          type: string
+                                        path:
+                                          type: string
+                                        target:
+                                          properties:
+                                            annotationSelector:
+                                              type: string
+                                            group:
+                                              type: string
+                                            kind:
+                                              type: string
+                                            labelSelector:
+                                              type: string
+                                            name:
+                                              type: string
+                                            namespace:
+                                              type: string
+                                            version:
+                                              type: string
+                                          type: object
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                          type: array
                         ref:
                           description: Ref is reference to another source within sources
                             field. This field will not be used if used with a `source`
@@ -1242,6 +1327,48 @@ spec:
                           type: object
                         type: array
                     type: object
+                  postRenderers:
+                    description: PostRenderers contains a PostRenderer specification
+                    items:
+                      description: PostRenderer contains a Helm PostRenderer specification.
+                      properties:
+                        kustomize:
+                          description: Kustomization to apply as PostRenderer.
+                          properties:
+                            patches:
+                              description: Patches is a list of Kustomize patches
+                              items:
+                                properties:
+                                  options:
+                                    additionalProperties:
+                                      type: boolean
+                                    type: object
+                                  patch:
+                                    type: string
+                                  path:
+                                    type: string
+                                  target:
+                                    properties:
+                                      annotationSelector:
+                                        type: string
+                                      group:
+                                        type: string
+                                      kind:
+                                        type: string
+                                      labelSelector:
+                                        type: string
+                                      name:
+                                        type: string
+                                      namespace:
+                                        type: string
+                                      version:
+                                        type: string
+                                    type: object
+                                type: object
+                              type: array
+                          type: object
+                      type: object
+                    type: array
                   ref:
                     description: Ref is reference to another source within sources
                       field. This field will not be used if used with a `source` tag.
@@ -1569,6 +1696,48 @@ spec:
                             type: object
                           type: array
                       type: object
+                    postRenderers:
+                      description: PostRenderers contains a PostRenderer specification
+                      items:
+                        description: PostRenderer contains a Helm PostRenderer specification.
+                        properties:
+                          kustomize:
+                            description: Kustomization to apply as PostRenderer.
+                            properties:
+                              patches:
+                                description: Patches is a list of Kustomize patches
+                                items:
+                                  properties:
+                                    options:
+                                      additionalProperties:
+                                        type: boolean
+                                      type: object
+                                    patch:
+                                      type: string
+                                    path:
+                                      type: string
+                                    target:
+                                      properties:
+                                        annotationSelector:
+                                          type: string
+                                        group:
+                                          type: string
+                                        kind:
+                                          type: string
+                                        labelSelector:
+                                          type: string
+                                        name:
+                                          type: string
+                                        namespace:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                        type: object
+                      type: array
                     ref:
                       description: Ref is reference to another source within sources
                         field. This field will not be used if used with a `source`
@@ -2048,6 +2217,49 @@ spec:
                                 type: object
                               type: array
                           type: object
+                        postRenderers:
+                          description: PostRenderers contains a PostRenderer specification
+                          items:
+                            description: PostRenderer contains a Helm PostRenderer
+                              specification.
+                            properties:
+                              kustomize:
+                                description: Kustomization to apply as PostRenderer.
+                                properties:
+                                  patches:
+                                    description: Patches is a list of Kustomize patches
+                                    items:
+                                      properties:
+                                        options:
+                                          additionalProperties:
+                                            type: boolean
+                                          type: object
+                                        patch:
+                                          type: string
+                                        path:
+                                          type: string
+                                        target:
+                                          properties:
+                                            annotationSelector:
+                                              type: string
+                                            group:
+                                              type: string
+                                            kind:
+                                              type: string
+                                            labelSelector:
+                                              type: string
+                                            name:
+                                              type: string
+                                            namespace:
+                                              type: string
+                                            version:
+                                              type: string
+                                          type: object
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                          type: array
                         ref:
                           description: Ref is reference to another source within sources
                             field. This field will not be used if used with a `source`
@@ -2389,6 +2601,50 @@ spec:
                                   type: object
                                 type: array
                             type: object
+                          postRenderers:
+                            description: PostRenderers contains a PostRenderer specification
+                            items:
+                              description: PostRenderer contains a Helm PostRenderer
+                                specification.
+                              properties:
+                                kustomize:
+                                  description: Kustomization to apply as PostRenderer.
+                                  properties:
+                                    patches:
+                                      description: Patches is a list of Kustomize
+                                        patches
+                                      items:
+                                        properties:
+                                          options:
+                                            additionalProperties:
+                                              type: boolean
+                                            type: object
+                                          patch:
+                                            type: string
+                                          path:
+                                            type: string
+                                          target:
+                                            properties:
+                                              annotationSelector:
+                                                type: string
+                                              group:
+                                                type: string
+                                              kind:
+                                                type: string
+                                              labelSelector:
+                                                type: string
+                                              name:
+                                                type: string
+                                              namespace:
+                                                type: string
+                                              version:
+                                                type: string
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                              type: object
+                            type: array
                           ref:
                             description: Ref is reference to another source within
                               sources field. This field will not be used if used with
@@ -2873,6 +3129,51 @@ spec:
                                       type: object
                                     type: array
                                 type: object
+                              postRenderers:
+                                description: PostRenderers contains a PostRenderer
+                                  specification
+                                items:
+                                  description: PostRenderer contains a Helm PostRenderer
+                                    specification.
+                                  properties:
+                                    kustomize:
+                                      description: Kustomization to apply as PostRenderer.
+                                      properties:
+                                        patches:
+                                          description: Patches is a list of Kustomize
+                                            patches
+                                          items:
+                                            properties:
+                                              options:
+                                                additionalProperties:
+                                                  type: boolean
+                                                type: object
+                                              patch:
+                                                type: string
+                                              path:
+                                                type: string
+                                              target:
+                                                properties:
+                                                  annotationSelector:
+                                                    type: string
+                                                  group:
+                                                    type: string
+                                                  kind:
+                                                    type: string
+                                                  labelSelector:
+                                                    type: string
+                                                  name:
+                                                    type: string
+                                                  namespace:
+                                                    type: string
+                                                  version:
+                                                    type: string
+                                                type: object
+                                            type: object
+                                          type: array
+                                      type: object
+                                  type: object
+                                type: array
                               ref:
                                 description: Ref is reference to another source within
                                   sources field. This field will not be used if used
@@ -3231,6 +3532,51 @@ spec:
                                         type: object
                                       type: array
                                   type: object
+                                postRenderers:
+                                  description: PostRenderers contains a PostRenderer
+                                    specification
+                                  items:
+                                    description: PostRenderer contains a Helm PostRenderer
+                                      specification.
+                                    properties:
+                                      kustomize:
+                                        description: Kustomization to apply as PostRenderer.
+                                        properties:
+                                          patches:
+                                            description: Patches is a list of Kustomize
+                                              patches
+                                            items:
+                                              properties:
+                                                options:
+                                                  additionalProperties:
+                                                    type: boolean
+                                                  type: object
+                                                patch:
+                                                  type: string
+                                                path:
+                                                  type: string
+                                                target:
+                                                  properties:
+                                                    annotationSelector:
+                                                      type: string
+                                                    group:
+                                                      type: string
+                                                    kind:
+                                                      type: string
+                                                    labelSelector:
+                                                      type: string
+                                                    name:
+                                                      type: string
+                                                    namespace:
+                                                      type: string
+                                                    version:
+                                                      type: string
+                                                  type: object
+                                              type: object
+                                            type: array
+                                        type: object
+                                    type: object
+                                  type: array
                                 ref:
                                   description: Ref is reference to another source
                                     within sources field. This field will not be used
@@ -3698,6 +4044,50 @@ spec:
                                   type: object
                                 type: array
                             type: object
+                          postRenderers:
+                            description: PostRenderers contains a PostRenderer specification
+                            items:
+                              description: PostRenderer contains a Helm PostRenderer
+                                specification.
+                              properties:
+                                kustomize:
+                                  description: Kustomization to apply as PostRenderer.
+                                  properties:
+                                    patches:
+                                      description: Patches is a list of Kustomize
+                                        patches
+                                      items:
+                                        properties:
+                                          options:
+                                            additionalProperties:
+                                              type: boolean
+                                            type: object
+                                          patch:
+                                            type: string
+                                          path:
+                                            type: string
+                                          target:
+                                            properties:
+                                              annotationSelector:
+                                                type: string
+                                              group:
+                                                type: string
+                                              kind:
+                                                type: string
+                                              labelSelector:
+                                                type: string
+                                              name:
+                                                type: string
+                                              namespace:
+                                                type: string
+                                              version:
+                                                type: string
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                              type: object
+                            type: array
                           ref:
                             description: Ref is reference to another source within
                               sources field. This field will not be used if used with
@@ -4048,6 +4438,50 @@ spec:
                                     type: object
                                   type: array
                               type: object
+                            postRenderers:
+                              description: PostRenderers contains a PostRenderer specification
+                              items:
+                                description: PostRenderer contains a Helm PostRenderer
+                                  specification.
+                                properties:
+                                  kustomize:
+                                    description: Kustomization to apply as PostRenderer.
+                                    properties:
+                                      patches:
+                                        description: Patches is a list of Kustomize
+                                          patches
+                                        items:
+                                          properties:
+                                            options:
+                                              additionalProperties:
+                                                type: boolean
+                                              type: object
+                                            patch:
+                                              type: string
+                                            path:
+                                              type: string
+                                            target:
+                                              properties:
+                                                annotationSelector:
+                                                  type: string
+                                                group:
+                                                  type: string
+                                                kind:
+                                                  type: string
+                                                labelSelector:
+                                                  type: string
+                                                name:
+                                                  type: string
+                                                namespace:
+                                                  type: string
+                                                version:
+                                                  type: string
+                                              type: object
+                                          type: object
+                                        type: array
+                                    type: object
+                                type: object
+                              type: array
                             ref:
                               description: Ref is reference to another source within
                                 sources field. This field will not be used if used
@@ -4539,6 +4973,50 @@ spec:
                                   type: object
                                 type: array
                             type: object
+                          postRenderers:
+                            description: PostRenderers contains a PostRenderer specification
+                            items:
+                              description: PostRenderer contains a Helm PostRenderer
+                                specification.
+                              properties:
+                                kustomize:
+                                  description: Kustomization to apply as PostRenderer.
+                                  properties:
+                                    patches:
+                                      description: Patches is a list of Kustomize
+                                        patches
+                                      items:
+                                        properties:
+                                          options:
+                                            additionalProperties:
+                                              type: boolean
+                                            type: object
+                                          patch:
+                                            type: string
+                                          path:
+                                            type: string
+                                          target:
+                                            properties:
+                                              annotationSelector:
+                                                type: string
+                                              group:
+                                                type: string
+                                              kind:
+                                                type: string
+                                              labelSelector:
+                                                type: string
+                                              name:
+                                                type: string
+                                              namespace:
+                                                type: string
+                                              version:
+                                                type: string
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                              type: object
+                            type: array
                           ref:
                             description: Ref is reference to another source within
                               sources field. This field will not be used if used with
@@ -4889,6 +5367,50 @@ spec:
                                     type: object
                                   type: array
                               type: object
+                            postRenderers:
+                              description: PostRenderers contains a PostRenderer specification
+                              items:
+                                description: PostRenderer contains a Helm PostRenderer
+                                  specification.
+                                properties:
+                                  kustomize:
+                                    description: Kustomization to apply as PostRenderer.
+                                    properties:
+                                      patches:
+                                        description: Patches is a list of Kustomize
+                                          patches
+                                        items:
+                                          properties:
+                                            options:
+                                              additionalProperties:
+                                                type: boolean
+                                              type: object
+                                            patch:
+                                              type: string
+                                            path:
+                                              type: string
+                                            target:
+                                              properties:
+                                                annotationSelector:
+                                                  type: string
+                                                group:
+                                                  type: string
+                                                kind:
+                                                  type: string
+                                                labelSelector:
+                                                  type: string
+                                                name:
+                                                  type: string
+                                                namespace:
+                                                  type: string
+                                                version:
+                                                  type: string
+                                              type: object
+                                          type: object
+                                        type: array
+                                    type: object
+                                type: object
+                              type: array
                             ref:
                               description: Ref is reference to another source within
                                 sources field. This field will not be used if used

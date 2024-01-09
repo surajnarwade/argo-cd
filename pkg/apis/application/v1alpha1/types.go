@@ -188,6 +188,8 @@ type ApplicationSource struct {
 	Chart string `json:"chart,omitempty" protobuf:"bytes,12,opt,name=chart"`
 	// Ref is reference to another source within sources field. This field will not be used if used with a `source` tag.
 	Ref string `json:"ref,omitempty" protobuf:"bytes,13,opt,name=ref"`
+	// PostRenderers contains a PostRenderer specification
+	PostRenderers []PostRenderer `json:"postRenderers,omitempty" protobuf:"bytes,14,opt,name=postRenderers"`
 }
 
 // ApplicationSources contains list of required information about the sources of an application
@@ -323,6 +325,22 @@ type ApplicationSourceHelm struct {
 	// ValuesObject specifies Helm values to be passed to helm template, defined as a map. This takes precedence over Values.
 	// +kubebuilder:pruning:PreserveUnknownFields
 	ValuesObject *runtime.RawExtension `json:"valuesObject,omitempty" protobuf:"bytes,10,opt,name=valuesObject"`
+	// PostRenderers contains a Helm PostRenderer specification
+	// PostRenderers []PostRenderer `json:"postRenderers,omitempty" protobuf:"bytes,11,opt,name=postRenderers"`
+}
+
+// PostRenderer contains a Helm PostRenderer specification.
+type PostRenderer struct {
+	// Kustomization to apply as PostRenderer.
+	// +optional
+	Kustomize Kustomize `json:"kustomize,omitempty" protobuf:"bytes,1,opt,name=kustomize"`
+}
+
+// Kustomize Helm PostRenderer specification.
+type Kustomize struct {
+	// Patches is a list of Kustomize patches
+	// +optional
+	Patches []KustomizePatch `json:"patches,omitempty" protobuf:"bytes,1,rep,name=patches"`
 }
 
 // HelmParameter is a parameter that's passed to helm template during manifest generation

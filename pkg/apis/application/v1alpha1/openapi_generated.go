@@ -88,6 +88,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.JWTTokens":                               schema_pkg_apis_application_v1alpha1_JWTTokens(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.JsonnetVar":                              schema_pkg_apis_application_v1alpha1_JsonnetVar(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KnownTypeField":                          schema_pkg_apis_application_v1alpha1_KnownTypeField(ref),
+		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.Kustomize":                               schema_pkg_apis_application_v1alpha1_Kustomize(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KustomizeGvk":                            schema_pkg_apis_application_v1alpha1_KustomizeGvk(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KustomizeOptions":                        schema_pkg_apis_application_v1alpha1_KustomizeOptions(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KustomizePatch":                          schema_pkg_apis_application_v1alpha1_KustomizePatch(ref),
@@ -111,6 +112,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PluginConfigMapRef":                      schema_pkg_apis_application_v1alpha1_PluginConfigMapRef(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PluginGenerator":                         schema_pkg_apis_application_v1alpha1_PluginGenerator(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PluginInput":                             schema_pkg_apis_application_v1alpha1_PluginInput(ref),
+		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PostRenderer":                            schema_pkg_apis_application_v1alpha1_PostRenderer(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ProjectRole":                             schema_pkg_apis_application_v1alpha1_ProjectRole(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PullRequestGenerator":                    schema_pkg_apis_application_v1alpha1_PullRequestGenerator(ref),
 		"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PullRequestGeneratorAzureDevOps":         schema_pkg_apis_application_v1alpha1_PullRequestGeneratorAzureDevOps(ref),
@@ -1611,12 +1613,26 @@ func schema_pkg_apis_application_v1alpha1_ApplicationSource(ref common.Reference
 							Format:      "",
 						},
 					},
+					"postRenderers": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PostRenderers contains a PostRenderer specification",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PostRenderer"),
+									},
+								},
+							},
+						},
+					},
 				},
 				Required: []string{"repoURL"},
 			},
 		},
 		Dependencies: []string{
-			"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceDirectory", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceHelm", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceKustomize", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourcePlugin"},
+			"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceDirectory", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceHelm", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourceKustomize", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.ApplicationSourcePlugin", "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.PostRenderer"},
 	}
 }
 
@@ -3865,6 +3881,35 @@ func schema_pkg_apis_application_v1alpha1_KnownTypeField(ref common.ReferenceCal
 	}
 }
 
+func schema_pkg_apis_application_v1alpha1_Kustomize(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Kustomize Helm PostRenderer specification.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"patches": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Patches is a list of Kustomize patches",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KustomizePatch"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.KustomizePatch"},
+	}
+}
+
 func schema_pkg_apis_application_v1alpha1_KustomizeGvk(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -4760,6 +4805,28 @@ func schema_pkg_apis_application_v1alpha1_PluginInput(ref common.ReferenceCallba
 		},
 		Dependencies: []string{
 			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1.JSON"},
+	}
+}
+
+func schema_pkg_apis_application_v1alpha1_PostRenderer(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "PostRenderer contains a Helm PostRenderer specification.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kustomize": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kustomization to apply as PostRenderer.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.Kustomize"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1.Kustomize"},
 	}
 }
 

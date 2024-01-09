@@ -63,6 +63,8 @@ import (
 	pathutil "github.com/argoproj/argo-cd/v2/util/io/path"
 	"github.com/argoproj/argo-cd/v2/util/kustomize"
 	"github.com/argoproj/argo-cd/v2/util/text"
+	kustypes "sigs.k8s.io/kustomize/api/types"
+	"sigs.k8s.io/kustomize/kyaml/resid"
 )
 
 const (
@@ -1171,6 +1173,57 @@ func helmTemplate(appPath string, repoRoot string, env *v1alpha1.Env, q *apiclie
 		}
 		passCredentials = appHelm.PassCredentials
 		templateOpts.SkipCrds = appHelm.SkipCrds
+		// check post renderers
+		if len(q.ApplicationSource.PostRenderers) != 0 {
+			var isKustomization bool
+			var kust kustypes.Kustomization
+			var patchList []kustypes.Patch
+			for _, pr := range q.ApplicationSource.PostRenderers {
+				for _, p := range pr.Kustomize.Patches {
+					isKustomization = true
+					patchList = append(patchList, kustypes.Patch{
+						Patch: p.Patch,
+						Target: &kustypes.Selector{
+							ResId: resid.ResId{
+								Gvk: resid.Gvk{
+									Kind:    p.Target.Kind,
+									Version: p.Target.Version,
+									Group:   p.Target.Group,
+								},
+							},
+						},
+					})
+				}
+				// for the future and the other renderers
+			}
+
+			if isKustomization {
+				// create kustomization file path
+				kustomizationPath := filepath.Join(appPath, "kustomization.yaml")
+				// create kustomization file
+				_, err = os.Create(kustomizationPath)
+				if err != nil {
+					return nil, err
+				}
+				// stat the kustomization path
+				kustomizationFileInfo, err := os.Stat(kustomizationPath)
+				if err != nil {
+					return nil, fmt.Errorf("failed to stat kustomization.yaml: %w", err)
+				}
+				// building kustomization file content
+				kust.Patches = patchList
+				kust.Resources = []string{"helm-output.yaml"}
+				kustFile, err := yaml.Marshal(kust)
+				if err != nil {
+					return nil, fmt.Errorf("failed to marshal kustomization.yaml: %w", err)
+				}
+				err = os.WriteFile(kustomizationPath, kustFile, kustomizationFileInfo.Mode())
+				if err != nil {
+					return nil, errors.New(err.Error())
+				}
+				templateOpts.KustomizePRs = string(kustFile)
+			}
+		}
 	}
 	if templateOpts.Name == "" {
 		templateOpts.Name = q.AppName

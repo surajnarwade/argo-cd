@@ -422,6 +422,9 @@ message ApplicationSource {
 
   // Ref is reference to another source within sources field. This field will not be used if used with a `source` tag.
   optional string ref = 13;
+
+  // PostRenderers contains a PostRenderer specification
+  repeated PostRenderer postRenderers = 14;
 }
 
 // ApplicationSourceDirectory holds options for applications of type plain YAML or Jsonnet
@@ -1078,6 +1081,13 @@ message KnownTypeField {
   optional string type = 2;
 }
 
+// Kustomize Helm PostRenderer specification.
+message Kustomize {
+  // Patches is a list of Kustomize patches
+  // +optional
+  repeated KustomizePatch patches = 1;
+}
+
 message KustomizeGvk {
   optional string group = 1;
 
@@ -1311,6 +1321,13 @@ message PluginInput {
   // Parameters contains the information to pass to the plugin. It is a map. The keys must be strings, and the
   // values can be any type.
   map<string, k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1.JSON> parameters = 1;
+}
+
+// PostRenderer contains a Helm PostRenderer specification.
+message PostRenderer {
+  // Kustomization to apply as PostRenderer.
+  // +optional
+  optional Kustomize kustomize = 1;
 }
 
 // ProjectRole represents a role that has access to a project
